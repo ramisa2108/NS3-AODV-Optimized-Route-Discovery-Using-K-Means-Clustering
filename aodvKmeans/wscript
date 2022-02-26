@@ -1,0 +1,48 @@
+## -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
+
+def build(bld):
+    module = bld.create_ns3_module('aodvKmeans', ['internet', 'wifi'])
+    module.includes = '.'
+    module.source = [
+        'model/aodvKmeans-id-cache.cc',
+        'model/aodvKmeans-dpd.cc',
+        'model/aodvKmeans-rtable.cc',
+        'model/aodvKmeans-rqueue.cc',
+        'model/aodvKmeans-packet.cc',
+        'model/aodvKmeans-neighbor.cc',
+        'model/aodvKmeans-routing-protocol.cc',
+        'helper/aodvKmeans-helper.cc',
+        ]
+
+    aodvKmeans_test = bld.create_ns3_module_test_library('aodvKmeans')
+    aodvKmeans_test.source = [
+        'test/aodvKmeans-id-cache-test-suite.cc',
+        'test/aodvKmeans-test-suite.cc',
+        'test/aodvKmeans-regression.cc',
+        'test/bug-772.cc',
+        'test/loopback.cc',
+        ]
+
+    # Tests encapsulating example programs should be listed here
+    if (bld.env['ENABLE_EXAMPLES']):
+        aodvKmeans_test.source.extend([
+        #   'test/aodvKmeans-examples-test-suite.cc',
+            ])
+    
+    headers = bld(features='ns3header')
+    headers.module = 'aodvKmeans'
+    headers.source = [
+        'model/aodvKmeans-id-cache.h',
+        'model/aodvKmeans-dpd.h',
+        'model/aodvKmeans-rtable.h',
+        'model/aodvKmeans-rqueue.h',
+        'model/aodvKmeans-packet.h',
+        'model/aodvKmeans-neighbor.h',
+        'model/aodvKmeans-routing-protocol.h',
+        'helper/aodvKmeans-helper.h',
+        ]
+
+    if bld.env['ENABLE_EXAMPLES']:
+        bld.recurse('examples')
+
+    bld.ns3_python_bindings()
