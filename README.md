@@ -21,30 +21,39 @@ Evaluation of the clusters are done by comparing to an ideal forwarder with:
 
 ### Modifications in the code base: 
 
-- `aodvKmeans-packet.h`  
+- **`aodvKmeans-packet.h`**  
+    
     new fields added to `RREPHeader` class : `m_txErrorCount`, `m_freeSpace`, `m_positionX`, `m_positionY`
-- `aodvKmeans-rtable.h`  
+- **`aodvKmeans-rtable.h`**  
+    
     new fields added to `RoutingTableEntry` class : `m_txErrorCount`, `m_freeSpace`, `m_positionX`, `m_positionY`
-- `aodvKmeans-routing-protocol.h`  
+- **`aodvKmeans-routing-protocol.h`**  
+    
     - `m_position` :  
      vector containing this node's position
     - `m_lastKnowPosition` :  
      map containing last known physical position of IP addresses
     - `m_lastKnownCluster` :  
      map containing last known clusters for forwarding to IP addresses (cleared periodically)
-- `aodvKmeans-rtable.cc`  
+
+- **`aodvKmeans-rtable.cc`**  
     - `Kmeans` : 
     runs K-Means clustering algorithm on neighbouring nodes to find optimal cluster of forwarders for given destination
 
 
-- `aodvKmeans-routing-protocol.cc`  
+- **`aodvKmeans-routing-protocol.cc`**  
+    
     - `SendHello` :  
         current node's position, free buffer space, transmission error count sent through `RREPHeader`
+    
     - `RecvReply` :  
         last known positions updated
+    
     - Features in `RoutingTable` updated with incoming `RREPHeader` information 
+    
     - `NotifyTxError` :  
         current node's tranmission error count incremented
+    
     - `SendRequest` and `RecvRequest` :  
      if `m_lastKnownPosition` contains the IP address for destination, then instead of broadcasting, `RREQ` is forwarded to optimal cluster obtained from `m_lastKnownClusters` or by running K-Means 
 
@@ -56,10 +65,10 @@ Evaluation of the clusters are done by comparing to an ideal forwarder with:
 ![](/Results/nodes-delay.png)
 ![](/Results/pps-delay.png)
 
-Here,  
+
 - Number of nodes : 10, 20, 30, 40, 50  
 - Number of packets per second : 10, 20, 30, 40, 50
 
-From the figures, we can see that the delivery ratio of the modified algorithm is slightly less than AODV. But the difference in delivery ratio is not very significant considering the modified approach uses substantially less number of forwarders for route discovery. On the other hand, we can see that the end to end delay in the modified approach is a lot lower than using only AODV. This is due to using lower number of RREQ and RREP packets in the modified approach which makes the route discovery process much faster. So, even though the delivery ratio sufferes a little due to selective forwarding using K-Means clustering, the modified approach reduces the end to end delay of the network.
+From the figures, we can see that the **delivery ratio of the modified algorithm is slightly less than AODV**. But the difference in delivery ratio is not very significant considering the modified approach uses substantially less number of forwarders for route discovery. On the other hand, we can see that the **end to end delay in the modified approach is a lot lower than using only AODV**. This is due to using lower number of RREQ and RREP packets in the modified approach which makes the route discovery process much faster. So, even though the delivery ratio sufferes a little due to selective forwarding using K-Means clustering, the modified approach reduces the end to end delay of the network.
 
 
