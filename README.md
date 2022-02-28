@@ -1,6 +1,8 @@
 # NS3 AODV Optimized Route Discovery Using K-Means Clustering
 
-In AODV routing, route discovery is done by flooding method, which is broadcasting route request (RREQ) packtes to all the nodes in the network. It often results in unnecessary re-transmissions of RREQ packets and the reply (RREP) packets generated in response, resulting in packet collisions and congestion in the network. In this project, I have proposed an optimized route discovering method for AODV. The key idea is to use K-Means clustering algorithm for selecting the best cluster of RREQ packet forwarders instead of broadcasting. The objective of this method is to reduce unnecessary control packet transmission in the network and thereby reducing congestion and end to end delay of the network.
+In AODV routing, route discovery is done by the flooding method - which is broadcasting route request (RREQ) packtes to all the nodes in the network. It often results in unnecessary re-transmissions of RREQ packets and the reply (RREP) packets generated in response, resulting in packet collisions and congestion in the network. In this project, I have proposed an optimized route discovering method for AODV. The key idea is to use K-Means clustering algorithm for selecting the best cluster of RREQ packet forwarders instead of broadcasting. The objective of this method is to reduce unnecessary control packet transmission in the network and thereby reducing congestion and end to end delay of the network.
+
+The network is simulated using ns3.35.
 
 
 ### Features used in K-Means clustering:  
