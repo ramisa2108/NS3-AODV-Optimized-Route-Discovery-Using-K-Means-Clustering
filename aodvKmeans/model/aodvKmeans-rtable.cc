@@ -392,7 +392,6 @@ std::vector<Ipv4Address>
 RoutingTable::Kmeans (Ipv4Address dst, uint32_t positionX, uint32_t positionY)
 {
     Purge();
-   // std::cout << "For sending to " << dst << "\n";
   
     /// features list
     int n = m_ipv4AddressEntry.size();
@@ -467,9 +466,6 @@ RoutingTable::Kmeans (Ipv4Address dst, uint32_t positionX, uint32_t positionY)
     {
       
       // assign clusters
-      
-      // std::cout << cluster_center[0][0] << " " << cluster_center[0][1] << " " << cluster_center[0][2] << " " << cluster_center[0][3] << "\n";
-      // std::cout << cluster_center[1][0] << " " << cluster_center[1][1] << " " << cluster_center[1][2] << " " << cluster_center[1][3] << "\n";
 
       for(int i=0;i<n;i++)
       {
@@ -490,14 +486,6 @@ RoutingTable::Kmeans (Ipv4Address dst, uint32_t positionX, uint32_t positionY)
           }
           
       }
-      // if(iteration == 0)
-      // {
-        // std::cout << "Initial assignment\n";
-        // for(int i=0;i<n;i++)
-        // {
-        //   std::cout << m_nb[i].m_neighborAddress << " " << cluster_assignments[i] << "\n";
-        // }
-      // }
 
       if(iteration == num_iterations) 
       {
@@ -551,35 +539,24 @@ RoutingTable::Kmeans (Ipv4Address dst, uint32_t positionX, uint32_t positionY)
 
     }
 
-    // std::cout << "End results:\n";
-    // for(int i=0;i<n;i++)
-    // {
-    //   std::cout << m_nb[i].m_neighborAddress << ": " << cluster_assignments[i] << "\n";
-    // }
 
     // de-normalize cluster centers
     
-    //std::cout << "after denormalizing:\n";
     for(int j=0;j<k;j++)
     {
       for(int d=0;d<3;d++)
       {
         cluster_center[j][d] *= (maxi[d] - mini[d]);
         cluster_center[j][d] += mini[d];
-        //std::cout << cluster_center[j][d] << ' ';
       }
-      //std::cout << '\n';
     }
     for(int i=0;i<n;i++)
     {
-      //std::cout << m_nb[i].m_neighborAddress << ": ";
       for(int d=0;d<3;d++)
       {
         features[i][d] *= (maxi[d] - mini[d]);
         features[i][d] += mini[d];
-        //std::cout << features[i][d] << ' ';
       }
-      //std::cout << '\n';
     }
 
     // select optimal cluster
@@ -602,7 +579,6 @@ RoutingTable::Kmeans (Ipv4Address dst, uint32_t positionX, uint32_t positionY)
 
     std::vector<Ipv4Address>selectedCluster;
     i=0;
-    //std::cout << "Selected cluster for:" << dst << "\n";
     for (std::map<Ipv4Address, RoutingTableEntry>::iterator it = m_ipv4AddressEntry.begin (); it != m_ipv4AddressEntry.end (); ++it)
     {
       if(it->first.IsBroadcast() || it->first.IsLocalhost() || it->first.IsMulticast() || 
@@ -613,43 +589,12 @@ RoutingTable::Kmeans (Ipv4Address dst, uint32_t positionX, uint32_t positionY)
       if(cluster_assignments[i] == optimal_cluster)
       {
         selectedCluster.push_back(it->first);
-        //std::cout << it->first <<" ";
       }
       i++;
     }
-    //std::cout << "\n";
     
     return selectedCluster;
 
-    // std::cout << "optimal cluster = " << optimal_cluster << "\n";
-
-
-    // select cluster head 
-    
-    // int optimal_node = -1;
-    // mini_dist = -1.0;
-    // for(int i=0;i<n;i++)
-    // {
-    //   if(cluster_assignments[i] == optimal_cluster)
-    //   {
-    //     double dist = 0;
-    //     for(int d=0; d<4; d++)
-    //     {
-    //         dist += (features[i][d] - ideal[d]) * (features[i][d] - ideal[d]); 
-    //     }
-    //     if(mini_dist == -1.0 || dist < mini_dist)
-    //     {
-    //       mini_dist = dist;
-    //       optimal_node = i;
-    //     }
-    //   }
-
-    // }
-
-    
-    // Ipv4Address selectedAddress = m_nb[optimal_node].m_neighborAddress;
-
-    // return selectedAddress;
 }
 
 
