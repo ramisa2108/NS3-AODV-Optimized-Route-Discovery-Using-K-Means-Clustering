@@ -74,3 +74,9 @@ Evaluation of the clusters are done by comparing to an ideal forwarder with feat
 From the figures, we can see that the **delivery ratio of the modified algorithm is slightly less than AODV**. But the difference in delivery ratio is not very significant considering the modified approach uses substantially less number of forwarders for route discovery. On the other hand, we can see that the **end to end delay in the modified approach is a lot lower than using only AODV**. This is due to using lower number of RREQ and RREP packets in the modified approach which makes the route discovery process much faster. So, even though the delivery ratio sufferes a little due to selective forwarding using K-Means clustering, the modified approach reduces the end to end delay of the network.
 
 
+### Steps for running the examples
+1. Download and install ![ns3.35](https://www.nsnam.org/releases/ns-3-35/)
+2. Copy the folder ![aodvKmeans](/aodvKmeans) to **ns3/src** or **ns3/contrib**
+3. Build the new module **aodvKmeans** [![Instructions](https://www.nsnam.org/docs/manual/html/new-modules.html)]
+4. Add the examples from ![scratch](/scratch) to **ns3/scratch**
+
