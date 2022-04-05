@@ -33,7 +33,7 @@
 #include "ns3/netanim-module.h"
 #include "ns3/olsr-module.h"
 #include "ns3/dsdv-module.h"
-#include "ns3/krop-module.h"
+#include "ns3/aodvKmeans-module.h"
 
 using namespace ns3;
 
