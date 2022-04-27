@@ -75,8 +75,8 @@ From the figures, we can see that the **delivery ratio of the modified algorithm
 
 
 ### Steps for running the examples
-1. Download and install ![ns3.35](https://www.nsnam.org/releases/ns-3-35/)
+1. Download and install [ns3.35](https://www.nsnam.org/releases/ns-3-35/)
 2. Copy the folder ![aodvKmeans](/aodvKmeans) to **ns3/src** or **ns3/contrib**
-3. Build the new module **aodvKmeans** [![Instructions](https://www.nsnam.org/docs/manual/html/new-modules.html)]
+3. Build the new module **aodvKmeans** [Instructions](https://www.nsnam.org/docs/manual/html/new-modules.html)
 4. Add the examples from ![scratch](/scratch) to **ns3/scratch**
 
