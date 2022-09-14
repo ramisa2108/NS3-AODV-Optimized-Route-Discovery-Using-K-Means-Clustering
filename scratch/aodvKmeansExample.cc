@@ -106,7 +106,7 @@ private:
     int m_packets_per_second;
     // intervals
     double m_interval;
-    // protocol 1: krop, 2: aodv
+    // protocol 1: aodv with kmeans, 2: aodv
     int m_protocol;
 
 
@@ -176,7 +176,7 @@ AODVExample::CommandSetUp(int argc, char *argv[])
     cmd.AddValue("moveclient", "Move clients away after some time", m_moveClients);
     cmd.AddValue("prefix", "Prefix of all generated file names\n", m_prefix);
     cmd.AddValue("packetsPerSecond", "Packets Sent per second", m_packets_per_second);
-    cmd.AddValue("protocol", "Protocol to use 1: Krop 2: AODV", m_protocol);
+    cmd.AddValue("protocol", "Protocol to use 1: AODV With KMeans 2: Only AODV", m_protocol);
     
     cmd.Parse (argc, argv);
     return;
@@ -408,10 +408,10 @@ AODVExample::CreateInternetStacks()
 
     InternetStackHelper internet;
     AodvHelper aodv;
-    KropHelper krop;
+    aodvKmeansHelper aodvKmeans;
     if(m_protocol == 1)
     {
-        internet.SetRoutingHelper(krop);
+        internet.SetRoutingHelper(aodvKmeans);
     }
     else 
     {
@@ -428,16 +428,6 @@ AODVExample::CreateInternetStacks()
 
     interfaces = addressHelper.Assign(devices);
 
-    
-    if (m_printRoutes)
-    {
-        Ptr<OutputStreamWrapper> routingStream = Create<OutputStreamWrapper> (m_prefix + ".routes", std::ios::out);
-        if(m_protocol == 1)
-            krop.PrintRoutingTableAllAt (Seconds (m_totalTime), routingStream);
-        else
-            aodv.PrintRoutingTableAllAt (Seconds (m_totalTime), routingStream);
-        
-    }
 
     AsciiTraceHelper ascii;
     internet.EnableAsciiIpv4All(ascii.CreateFileStream(m_prefix + "-ipv4.tr"));
